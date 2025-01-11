@@ -1,46 +1,39 @@
 #include <Wire.h>
 #include <I2C_ModularDevicesList.h>
+#include <I2C_ModularDevice.h>
 
 I2C_ModularDevicesList deviceList = I2C_ModularDevicesList();
 
 void setup() {
   Wire.begin();
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial) {};
+}
+
+void printDevicesStatus() {
+  for (byte i = USABLE_ADDRESSES_RANGE_LOW; i <= USABLE_ADDRESSES_RANGE_HIGH; i++) {
+    if (deviceList.device_status_by_address(i) != NOT_FOUND) {
+      Serial.print(i, HEX);
+      Serial.print(" : \t");
+      Serial.print("STATUS: ");
+      Serial.print(deviceList.device_status_by_address(i));
+      Serial.print("\t");
+      if (deviceList.device_status_by_address(i) == INSTALLED) {
+        Serial.print("NAME: ");
+        Serial.print(deviceList.getDevice(i)->getDeviceInfo().c_str());
+      }
+      Serial.print("\n");
+    }
+  }
 }
 
 void loop() {
 
-  deviceList.scan_I2C_bus();
-  
-  for (byte i = USABLE_ADDRESSES_RANGE_LOW; i <= USABLE_ADDRESSES_RANGE_HIGH; i++) {
-    Serial.print(deviceList.device_status_by_address(i));
-    Serial.print(" ");
-  }
-  Serial.print("\n");
+  int new_devices_num = deviceList.scan_I2C_bus();
+  printDevicesStatus();
+  if (new_devices_num > 0) deviceList.init_new_devices();
+  printDevicesStatus();
 
-
-
-
-  //Serial.println("Richiedo dati a indirizzo ");
-
-
-  // for (int i = 0; i < device_num; i++) {
-  //   Serial.print("Richiedo dati a indirizzo ");
-  //   Serial.println(device_addresses[i]);
-
-  //   Wire.requestFrom((int)device_addresses[i], 7);
-
-  //   Serial.println("Leggo dati inviati:");
-
-  //   Serial.print('\t');
-  //   while (Wire.available()) {  // slave may send less than requested
-  //     char c = Wire.read();     // receive a byte as character
-  //     Serial.print(c);          // print the character
-  //   }
-
-  //   Serial.println();
-  // }
   delay(5000);  // Wait 5 seconds for next scan
 }
