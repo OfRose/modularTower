@@ -1,8 +1,8 @@
-#include "I2C_ModularDevicesList.h"
+#include "I2C_ModularDevicesManager.h"
 
-I2C_ModularDevicesList::I2C_ModularDevicesList() {}
+I2C_ModularDevicesManager::I2C_ModularDevicesManager() {}
 
-int I2C_ModularDevicesList::scan_I2C_bus()
+int I2C_ModularDevicesManager::scan_I2C_bus()
 {
   int devices_found = 0;
   for (uint8_t address = USABLE_ADDRESSES_RANGE_LOW; address <= USABLE_ADDRESSES_RANGE_HIGH; address++)
@@ -31,12 +31,12 @@ int I2C_ModularDevicesList::scan_I2C_bus()
   return devices_found;
 }
 
-int I2C_ModularDevicesList::device_status_by_address(uint8_t address)
+int I2C_ModularDevicesManager::device_status_by_address(uint8_t address)
 {
   return device_status_array[address - USABLE_ADDRESSES_RANGE_LOW];
 }
 
-void I2C_ModularDevicesList::init_new_devices()
+void I2C_ModularDevicesManager::init_new_devices()
 {
   for (int i = USABLE_ADDRESSES_RANGE_LOW; i <= USABLE_ADDRESSES_RANGE_HIGH; i++)
   {
@@ -45,10 +45,10 @@ void I2C_ModularDevicesList::init_new_devices()
       I2C_ModularDevice *myNewDevice;
       myNewDevice = new I2C_ModularDevice();
 
-      char deviceInfoData[MAX_MSG_LEN];
+      char deviceInfoData[MAX_BYTE_TO_REPRESENT_MAP_LEN];
       int c = 0;
 
-      Wire.requestFrom(i, MAX_MSG_LEN);
+      Wire.requestFrom(i, MAX_BYTE_TO_REPRESENT_MAP_LEN);
       while (Wire.available())
       {
         deviceInfoData[c++] = Wire.read();
@@ -62,7 +62,7 @@ void I2C_ModularDevicesList::init_new_devices()
   }
 }
 
-I2C_ModularDevice *I2C_ModularDevicesList::getDevice(uint8_t address)
+I2C_ModularDevice *I2C_ModularDevicesManager::getDevice(uint8_t address)
 {
   if (device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] == INSTALLED)
   {

@@ -1,0 +1,87 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17" pages="2">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="GeneralWorkFlow">
+    <mxGraphModel dx="1360" dy="713" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="L1vMiWqnFq87hTV4YWRv-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="L1vMiWqnFq87hTV4YWRv-1" target="L1vMiWqnFq87hTV4YWRv-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="L1vMiWqnFq87hTV4YWRv-1" value="power on" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="354" y="110" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="L1vMiWqnFq87hTV4YWRv-2" target="diSYWgQLE97OoW4EViM1-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="L1vMiWqnFq87hTV4YWRv-2" target="diSYWgQLE97OoW4EViM1-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;u&gt;scan devices&lt;/u&gt;" link="data:page/id,nndK6b61ZeouiECr7xN7" id="L1vMiWqnFq87hTV4YWRv-2">
+          <mxCell style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+            <mxGeometry x="354" y="220" width="120" height="60" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="diSYWgQLE97OoW4EViM1-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="diSYWgQLE97OoW4EViM1-1" target="diSYWgQLE97OoW4EViM1-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-1" value="initialization new devices" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="460" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="diSYWgQLE97OoW4EViM1-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="414" y="480" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-3" value="Check INPUT" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="354" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="diSYWgQLE97OoW4EViM1-6" target="diSYWgQLE97OoW4EViM1-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-6" value="check config" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="354" y="570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="diSYWgQLE97OoW4EViM1-8" target="L1vMiWqnFq87hTV4YWRv-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180" y="180" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="181" y="720" />
+              <mxPoint x="181" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diSYWgQLE97OoW4EViM1-8" value="Trigger output" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="354" y="690" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="nndK6b61ZeouiECr7xN7" name="ScanDevices">
+    <mxGraphModel dx="1224" dy="642" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="AXCu68Z3cbudrF-IKGcZ-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AXCu68Z3cbudrF-IKGcZ-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="412.5" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AXCu68Z3cbudrF-IKGcZ-5" value="Prova di comunicazione&lt;div&gt;&amp;nbsp;con tutti gli indirizzi validi&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="338" y="150" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AXCu68Z3cbudrF-IKGcZ-6" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="1" source="AXCu68Z3cbudrF-IKGcZ-5" target="Z2GlDewLIf066apiZzBr-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="390" as="sourcePoint" />
+            <mxPoint x="414" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z2GlDewLIf066apiZzBr-1" value="scan new devices" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="353.5" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XGRcmTiPJBaWGE3TZLNj-13" value="&lt;p style=&quot;margin: 4px 0px 0px;&quot;&gt;&lt;b&gt;MyI2CHandler&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- uint8_t scan_bus(uint8_t[max_allowed_devices] occurrence_vector);&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin: 4px 0px 0px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=center;overflow=fill;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="40" y="190" width="380" height="90" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

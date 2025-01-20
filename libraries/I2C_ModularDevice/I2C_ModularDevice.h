@@ -22,7 +22,7 @@ class I2C_ModularDevice
 {
 public:
     I2C_ModularDevice();
-    std::string getDeviceInfo();
+    char* getDeviceInfo();
     void setDeviceInfo(char *data);
 
 private:
