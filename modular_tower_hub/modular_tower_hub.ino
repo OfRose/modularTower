@@ -19,10 +19,10 @@ void printDevicesStatus() {
       Serial.print("STATUS: ");
       Serial.print(deviceManager.device_status_by_address(i));
       Serial.print("\t");
-      if (deviceManager.device_status_by_address(i) == INSTALLED) {
-        Serial.print("NAME: ");
-        Serial.print(deviceManager.getDevice(i)->getDeviceInfo());
-      }
+      // if (deviceManager.device_status_by_address(i) == INSTALLED) {
+      //   Serial.print("NAME: ");
+      //   Serial.print(deviceManager.getDevice(i)->getDeviceInfo());
+      // }
       Serial.print("\n");
     }
   }
@@ -34,6 +34,9 @@ void loop() {
   printDevicesStatus();
   if (new_devices_num > 0) deviceManager.init_new_devices();
   printDevicesStatus();
-
+  uint32_t prova = deviceManager.getDevice(9)->commands_map_len;
+  //uint32_t prova = 0x12ABCDEF;
+  Serial.println(prova, HEX);
+  Serial.println(prova);
   delay(5000);  // Wait 5 seconds for next scan
 }

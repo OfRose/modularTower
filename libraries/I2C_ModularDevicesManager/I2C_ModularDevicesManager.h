@@ -71,7 +71,7 @@ public:
 private:
     /*
     Questo vettore permette un accesso diretto in base all'indirizzo del dispositivo di cui viene rappresentato lo stato.
-    Inizializzo a Sìstato NOT_FOUND.
+    Inizializzo a stato NOT_FOUND.
     */
     int device_status_array[TOTAL_AVAILABLE_ADDRESSES] = {NOT_FOUND};
 

@@ -24,6 +24,7 @@ public:
     I2C_ModularDevice();
     char* getDeviceInfo();
     void setDeviceInfo(char *data);
+    uint32_t commands_map_len;
 
 private:
     std::string device_name;

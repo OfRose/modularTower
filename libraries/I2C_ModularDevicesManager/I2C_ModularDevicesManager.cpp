@@ -2,6 +2,10 @@
 
 I2C_ModularDevicesManager::I2C_ModularDevicesManager() {}
 
+/*
+scan indirizzi validi del bus e assegnazione stato DISCOVERED_TO_INITIALISE a new devices
+*/
+
 int I2C_ModularDevicesManager::scan_I2C_bus()
 {
   int devices_found = 0;
@@ -20,8 +24,8 @@ int I2C_ModularDevicesManager::scan_I2C_bus()
       if (device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] == NOT_FOUND)
       {
         device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] = DISCOVERED_TO_INITIALISE;
+        devices_found++;
       }
-      devices_found++;
       break;
     case 4:
       device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] = NOT_FOUND;
@@ -45,17 +49,29 @@ void I2C_ModularDevicesManager::init_new_devices()
       I2C_ModularDevice *myNewDevice;
       myNewDevice = new I2C_ModularDevice();
 
-      char deviceInfoData[MAX_BYTE_TO_REPRESENT_MAP_LEN];
-      int c = 0;
+      // char deviceInfoData[MAX_BYTE_TO_REPRESENT_MAP_LEN];
+      // int c = 0;
+      uint32_t device_commands_map_len = 0;
 
-      Wire.requestFrom(i, MAX_BYTE_TO_REPRESENT_MAP_LEN);
-      while (Wire.available())
+      int returned_bytes = Wire.requestFrom(i, MAX_BYTE_TO_REPRESENT_MAP_LEN);
+
+      if (returned_bytes != MAX_BYTE_TO_REPRESENT_MAP_LEN)
       {
-        deviceInfoData[c++] = Wire.read();
+        device_status_array[i - USABLE_ADDRESSES_RANGE_LOW] = ERROR;
+        return;
       }
 
-      myNewDevice->setDeviceInfo(deviceInfoData);
+      // ricevo da MSB a LSB
 
+      while (Wire.available())
+      {
+        // deviceInfoData[c++] = Wire.read();
+        device_commands_map_len = device_commands_map_len << 8;
+        device_commands_map_len = device_commands_map_len | Wire.read();
+      }
+
+      // myNewDevice->setDeviceInfo(deviceInfoData);
+      myNewDevice->commands_map_len = device_commands_map_len;
       device_status_array[i - USABLE_ADDRESSES_RANGE_LOW] = INSTALLED;
       devices[i] = myNewDevice;
     }
