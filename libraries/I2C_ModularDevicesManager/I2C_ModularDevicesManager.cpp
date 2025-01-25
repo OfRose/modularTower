@@ -1,6 +1,9 @@
 #include "I2C_ModularDevicesManager.h"
 
-I2C_ModularDevicesManager::I2C_ModularDevicesManager() {}
+I2C_ModularDevicesManager::I2C_ModularDevicesManager()
+{
+  Wire.begin();
+}
 
 /*
 scan indirizzi validi del bus e assegnazione stato DISCOVERED_TO_INITIALISE a new devices
@@ -49,9 +52,11 @@ void I2C_ModularDevicesManager::init_new_devices()
       I2C_ModularDevice *myNewDevice;
       myNewDevice = new I2C_ModularDevice();
 
-      // char deviceInfoData[MAX_BYTE_TO_REPRESENT_MAP_LEN];
-      // int c = 0;
       uint32_t device_commands_map_len = 0;
+
+      Wire.beginTransmission(i);
+      Wire.write(0x00);
+      Wire.endTransmission();
 
       int returned_bytes = Wire.requestFrom(i, MAX_BYTE_TO_REPRESENT_MAP_LEN);
 
@@ -65,13 +70,31 @@ void I2C_ModularDevicesManager::init_new_devices()
 
       while (Wire.available())
       {
-        // deviceInfoData[c++] = Wire.read();
         device_commands_map_len = device_commands_map_len << 8;
         device_commands_map_len = device_commands_map_len | Wire.read();
       }
 
-      // myNewDevice->setDeviceInfo(deviceInfoData);
       myNewDevice->commands_map_len = device_commands_map_len;
+
+      // read_config
+      Wire.beginTransmission(i);
+      Wire.write(myNewDevice->config_retrieve_command);
+      Wire.endTransmission();
+
+      uint8_t commands_map_buffer[device_commands_map_len];
+
+      Wire.requestFrom(i, device_commands_map_len);
+
+      while (!Wire.available()){};
+
+      for (int i = 0; i < device_commands_map_len; i++)
+      {
+        commands_map_buffer[i] = Wire.read();
+      }
+
+      // load_config
+      myNewDevice->loadConfig(commands_map_buffer);
+
       device_status_array[i - USABLE_ADDRESSES_RANGE_LOW] = INSTALLED;
       devices[i] = myNewDevice;
     }

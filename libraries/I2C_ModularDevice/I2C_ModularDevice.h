@@ -22,9 +22,12 @@ class I2C_ModularDevice
 {
 public:
     I2C_ModularDevice();
-    char* getDeviceInfo();
+    char *getDeviceInfo();
     void setDeviceInfo(char *data);
+    void loadConfig(uint8_t* commands_map_buffer);
     uint32_t commands_map_len;
+    uint8_t config_retrieve_command = 0x01;
+    uint8_t* config = nullptr;
 
 private:
     std::string device_name;
