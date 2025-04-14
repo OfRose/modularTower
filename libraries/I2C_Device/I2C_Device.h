@@ -18,10 +18,10 @@ enum device_commands
     INTRODUCTION,
 };
 
-class I2C_ModularDevice
+class I2C_Device
 {
 public:
-    I2C_ModularDevice();
+    I2C_Device();
     char *getDeviceInfo();
     void setDeviceInfo(char *data);
     void loadConfig(uint8_t* commands_map_buffer);

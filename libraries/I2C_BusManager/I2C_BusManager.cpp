@@ -1,6 +1,6 @@
-#include "I2C_ModularDevicesManager.h"
+#include "I2C_BusManager.h"
 
-I2C_ModularDevicesManager::I2C_ModularDevicesManager()
+I2C_BusManager::I2C_BusManager()
 {
   Wire.begin();
 }
@@ -9,7 +9,7 @@ I2C_ModularDevicesManager::I2C_ModularDevicesManager()
 scan indirizzi validi del bus e assegnazione stato DISCOVERED_TO_INITIALISE a new devices
 */
 
-int I2C_ModularDevicesManager::scan_I2C_bus()
+int I2C_BusManager::scan_I2C_bus()
 {
   int devices_found = 0;
   for (uint8_t address = USABLE_ADDRESSES_RANGE_LOW; address <= USABLE_ADDRESSES_RANGE_HIGH; address++)
@@ -38,12 +38,12 @@ int I2C_ModularDevicesManager::scan_I2C_bus()
   return devices_found;
 }
 
-int I2C_ModularDevicesManager::device_status_by_address(uint8_t address)
+int I2C_BusManager::device_status_by_address(uint8_t address)
 {
   return device_status_array[address - USABLE_ADDRESSES_RANGE_LOW];
 }
 
-void I2C_ModularDevicesManager::init_new_devices()
+void I2C_BusManager::init_new_devices()
 {
   for (int i = USABLE_ADDRESSES_RANGE_LOW; i <= USABLE_ADDRESSES_RANGE_HIGH; i++)
   {
@@ -101,7 +101,7 @@ void I2C_ModularDevicesManager::init_new_devices()
   }
 }
 
-I2C_ModularDevice *I2C_ModularDevicesManager::getDevice(uint8_t address)
+I2C_ModularDevice *I2C_BusManager::getDevice(uint8_t address)
 {
   if (device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] == INSTALLED)
   {

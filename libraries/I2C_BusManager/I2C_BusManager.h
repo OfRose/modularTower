@@ -1,5 +1,8 @@
 #ifndef I2C_MODULAR_DEVICE_MANAGER
 #define I2C_MODULAR_DEVICE_MANAGER
+
+#include <I_BusManager.h>
+
 /*
     libreria rduino per comunicazione I2C
 */
@@ -37,7 +40,7 @@
 #define MAX_BYTE_TO_REPRESENT_MAP_LEN 4
 
 /*
-Stati possibili device per popolare il vettore di stato definito all'interno della classe I2C_ModularDevicesManager
+Stati possibili device per popolare il vettore di stato definito all'interno della classe I2C_BusManager
 */
 
 enum device_statuses
@@ -48,20 +51,19 @@ enum device_statuses
     ERROR,
 };
 
-class I2C_ModularDevicesManager
+class I2C_BusManager : public I_BusManager
 {
 public:
-    I2C_ModularDevicesManager(); // Constructor
+    I2C_BusManager(); // Constructor
 
-    int scan_I2C_bus();       //restituisce numero device DISCOVERED_TO_INITIALISE trovati
-    void init_new_devices();  // inizializza devices (instanziamento classe, lettura mappa comandi, aggiornamento stato ecc)
+    int scan_I2C_bus();      // restituisce numero device DISCOVERED_TO_INITIALISE trovati
+    void init_new_devices(); // inizializza devices (instanziamento classe, lettura mappa comandi, aggiornamento stato ecc)
     /*
         Sample Usage:
         if(deviceManager.scan_I2C_bus() > 0){
             deviceManager.init_new_devices();
         }
     */
-
     // Restituisce lo stato salvato nel vettore device_status_array
     int device_status_by_address(uint8_t address);
 
