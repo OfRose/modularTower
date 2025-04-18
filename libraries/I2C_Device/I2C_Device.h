@@ -2,6 +2,7 @@
 #define I2C_MODULAR_DEVICE_H
 
 #include <string>
+#include <I_Device.h>
 
 enum device_types
 {
@@ -18,7 +19,7 @@ enum device_commands
     INTRODUCTION,
 };
 
-class I2C_Device
+class I2C_Device : public I_Device
 {
 public:
     I2C_Device();

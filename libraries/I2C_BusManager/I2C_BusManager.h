@@ -1,7 +1,8 @@
-#ifndef I2C_MODULAR_DEVICE_MANAGER
-#define I2C_MODULAR_DEVICE_MANAGER
+#ifndef I2C_MODULAR_DEVICE_MANAGER_H
+#define I2C_MODULAR_DEVICE_MANAGER_H
 
 #include <I_BusManager.h>
+#include <I_DeviceStatus.h>
 
 /*
     libreria rduino per comunicazione I2C
@@ -10,7 +11,7 @@
 /*
     importo classe che modellerà i dispositivi e hasmap per salvarli come coppia chiave valore indirizzo-puntatore a oggetto device
 */
-#include <I2C_ModularDevice.h>
+#include <I2C_Device.h>
 #include <unordered_map>
 
 /*
@@ -56,8 +57,12 @@ class I2C_BusManager : public I_BusManager
 public:
     I2C_BusManager(); // Constructor
 
-    int scan_I2C_bus();      // restituisce numero device DISCOVERED_TO_INITIALISE trovati
-    void init_new_devices(); // inizializza devices (instanziamento classe, lettura mappa comandi, aggiornamento stato ecc)
+    I_Device *scan_bus_for_new_devices(int *devices_num);
+    //int scan_I2C_bus();      // restituisce numero device DISCOVERED_TO_INITIALISE trovati
+    
+
+    void init_new_device(I_Device *);
+    //void init_new_devices(); // inizializza devices (instanziamento classe, lettura mappa comandi, aggiornamento stato ecc)
     /*
         Sample Usage:
         if(deviceManager.scan_I2C_bus() > 0){
@@ -65,10 +70,13 @@ public:
         }
     */
     // Restituisce lo stato salvato nel vettore device_status_array
-    int device_status_by_address(uint8_t address);
+    //int device_status_by_address(uint8_t address);
 
     // restituisce puntamento all'istanza della classe device per l'indirizzo selezionato
-    I2C_ModularDevice *getDevice(uint8_t address);
+    //I2C_Device *getDevice(uint8_t address);
+
+    I_Device* get_all_devices(int *devices_num);
+    I_DeviceStatus* get_device_status(I_Device *);
 
 private:
     /*
@@ -78,7 +86,7 @@ private:
     int device_status_array[TOTAL_AVAILABLE_ADDRESSES] = {NOT_FOUND};
 
     // hasmap for storing pointers to instances of class modularDevice
-    std::unordered_map<uint8_t, I2C_ModularDevice *> devices;
+    std::unordered_map<uint8_t, I2C_Device *> devices;
 };
 
-#endif /*I2C_MODULAR_DEVICE_MANAGER*/
+#endif /*I2C_MODULAR_DEVICE_MANAGER_H*/
