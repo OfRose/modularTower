@@ -1,3 +1,5 @@
+#include <Wire.h>
+
 #define LED LED_BUILTIN  // digital pin connected to LED, for testing of switch code only
 bool led_status = LOW;   // start with LED off, for testing of switch code  only
 
@@ -62,6 +64,9 @@ bool read_button() {
 }  // end of read_button function
 
 void setup() {
+
+  Wire.begin(8); 
+
   pinMode(LED, OUTPUT);
   pinMode(button1, INPUT);
   pinMode(button2, INPUT);

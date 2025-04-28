@@ -5,4 +5,4 @@ class I_IOChainingManager
 {
 };
 
-#endif /*I2C_MODULAR_DEVICE_MANAGER*/
+#endif /*I_IO_CHAINING_MANAGER_H*/

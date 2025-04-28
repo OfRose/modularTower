@@ -1,32 +1,131 @@
 #include "I2C_BusManager.h"
+#include <Wire.h> // libreria rduino per comunicazione I2C
+#include <I_Device.h>
+// #include <I2C_Device.h>
+
+#define USABLE_ADDRESSES_RANGE_LOW 0x08
+#define USABLE_ADDRESSES_RANGE_HIGH 0x77
+#define TOTAL_AVAILABLE_ADDRESSES USABLE_ADDRESSES_RANGE_HIGH - USABLE_ADDRESSES_RANGE_LOW + 1
 
 I2C_BusManager::I2C_BusManager()
 {
   Wire.begin();
 }
 
-I_Device *I2C_BusManager::scan_bus_for_new_devices(int *devices_num)
+void I2C_BusManager::scan_bus()
 {
-    return nullptr;
+  // int newly_found_devices[];
+
+  for (uint8_t address = USABLE_ADDRESSES_RANGE_LOW; address <= USABLE_ADDRESSES_RANGE_HIGH; address++)
+  {
+    // test for available devices in bus
+    Wire.beginTransmission(address);
+    uint8_t end_of_trasmission_byte = Wire.endTransmission();
+
+    // switch-case for end of trasmission byte
+    switch (end_of_trasmission_byte)
+    {
+    case 0:
+      //  on successful transmission we update the acnkowledged device's address on status array
+      //  we offset the value of address to match array length
+      if (this->devices.find(address) == this->devices.end())
+      {
+        this->devices[address] = new I2C_Device(address);
+      }else{
+        this->devices[address]->set_status(UNINITIALISED);
+      }
+
+      break;
+    case 2:
+      if (this->devices.find(address) != this->devices.end())
+      {
+        this->devices[address]->set_status(DISCONNECTED);
+      }
+      break;
+    }
+  }
 }
 
-void I2C_BusManager::init_new_device(I_Device *)
+/* I_Device *I2C_BusManager::scan_bus_for_new_devices(int *devices_num)
 {
-}
+  int devices_found = 0;
+  int newly_found_devices[];
 
+  for (uint8_t address = USABLE_ADDRESSES_RANGE_LOW; address <= USABLE_ADDRESSES_RANGE_HIGH; address++)
+  {
+    // test for available devices in bus
+    Wire.beginTransmission(address);
+    uint8_t end_of_trasmission_byte = Wire.endTransmission();
+
+    // switch-case for end of trasmission byte
+    switch (end_of_trasmission_byte)
+    {
+    case 0:
+      //  on successful transmission we update the acnkowledged device's address on status array
+      //  we offset the value of address to match array length
+      if (device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] == NOT_FOUND)
+      {
+        device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] = DISCOVERED_TO_INITIALISE;
+        devices_found++;
+      }
+      break;
+    case 4:
+      device_status_array[address - USABLE_ADDRESSES_RANGE_LOW] = NOT_FOUND;
+      break;
+    }
+  }
+
+
+
+  return devices_found;
+}
+ */
+
+/* void I2C_BusManager::scan_bus()
+{
+  // int devices_found = 0;
+  uint8_t end_of_trasmission_byte;
+
+  for (uint8_t address = USABLE_ADDRESSES_RANGE_LOW; address <= USABLE_ADDRESSES_RANGE_HIGH; address++)
+  {
+    Wire.beginTransmission(address);
+    end_of_trasmission_byte = Wire.endTransmission();
+
+    // switch-case for end of trasmission byte
+    switch (end_of_trasmission_byte)
+    {
+    case 0:
+      I2C_device_array[address - USABLE_ADDRESSES_RANGE_LOW] = new I2C_Device(address);
+      break;
+    default:
+      I2C_device_array[address - USABLE_ADDRESSES_RANGE_LOW] = nullptr;
+    }
+  }
+  return;
+}
+ */
 /*
 scan indirizzi validi del bus e assegnazione stato DISCOVERED_TO_INITIALISE a new devices
 */
 
-I_Device* I2C_BusManager::get_all_devices(int *devices_num)
+/* std::string I2C_BusManager::get_devices_status_string()
 {
-}
+  std::string res = "STATUS: ";
+  for (uint8_t address = 0; address < TOTAL_AVAILABLE_ADDRESSES; address++)
+  {
+    if (I2C_device_array[address])
+    {
+      res = res + I2C_device_array[address]->get_status();
+    }
+  }
+  return res;
+} */
 
-I_DeviceStatus* I2C_BusManager::get_device_status(I_Device *)
+/* std::string I2C_BusManager::get_device_info_string(uint8_t device_id)
 {
-    return nullptr;
+    return I2C_device_array[device_id - USABLE_ADDRESSES_RANGE_LOW]->get_info_string();
 }
-
+ */
 /* int I2C_BusManager::scan_I2C_bus()
 {
   int devices_found = 0;

@@ -1,11 +1,15 @@
 #include <ModularDeviceController.h>
+
+#include <I_BusManager.h>
 #include <I2C_BusManager.h>
-#include <I2C_Device.h>
+
 #include <I_IOChainingManager.h>
 
-I2C_BusManager deviceManager = I2C_BusManager();
+#include <I_Device.h>
 
-ModularDeviceController master = ModularDeviceController(&deviceManager, (I_IOChainingManager*) nullptr);
+I_BusManager* deviceManager = new I2C_BusManager();
+
+ModularDeviceController master = ModularDeviceController(deviceManager, (I_IOChainingManager*)nullptr);
 
 void setup() {
 
@@ -30,10 +34,32 @@ void setup() {
 //   }
 // }
 
-void loop() {
+String prompt = "Select option:\n\t1) Print all devices info;\n";
 
-  master.main_loop();
-  Serial.println(master.get_device_status_string().c_str());
+void loop() {
+  char input;
+  Serial.println(prompt);
+  while (!Serial.available()) {
+  }
+  input = Serial.read();
+  while (Serial.available()) {
+    Serial.read();
+  }
+  int len;
+  I_Device** device_buffer;
+  switch (input) {
+    case '1':
+      master.bus_manager->scan_bus();
+      len = master.bus_manager->get_devices_num();
+      device_buffer = new I_Device*[len];
+      master.bus_manager->get_devices(device_buffer);
+      for (int i = 0; i < len; i++) {
+        Serial.println(device_buffer[i]->get_info_string().c_str());
+      }
+      break;
+    default:
+      Serial.println("Not implemented yet!");
+  }
 
   // int new_devices_num = deviceManager.scan_I2C_bus();
   // if (new_devices_num > 0) {
@@ -47,5 +73,5 @@ void loop() {
 
   // Serial.write((char*)deviceManager.getDevice(9)->config, deviceManager.getDevice(9)->commands_map_len);
   // Serial.println();
-  // delay(5000);  // Wait 5 seconds for next scan
+  delay(1000);  // Wait 5 seconds for next scan
 }
