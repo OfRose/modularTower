@@ -2,24 +2,31 @@
 #define I_BUS_MANAGER_H
 
 #include <I_Device.h>
-#include <map>
 
 class I_BusManager
 {
 public:
-    virtual int get_devices_num() = 0;
-    virtual void get_devices(I_Device **devices_return_array) = 0;
+    enum device_statuses
+    {
+        NONE,
+        DISCOVERED,
+        UNINITIALISED,
+        INITIALISED,
+        INPUT_AVAILABLE,
+        DISCONNECTED,
+        ERROR,
+        ANY
+    };
 
-    virtual void scan_bus() = 0;
-    //virtual int get_discovered_devices_num() = 0;
-    //virtual void get_discovered_devices(I_Device **devices_return_array) = 0;
+    static inline std::string device_statuses_string[] = {"NONE", "DISCOVERED", "UNINITIALISED", "INITIALISED", "INPUT_AVAILABLE", "DISCONNECTED", "ERROR", "ANY"};
+    static std::string from_device_status_to_string(device_statuses status) { return device_statuses_string[status]; };
 
-    // virtual void add_device(I_Device *device) = 0;
-    // virtual void remove_device(I_Device *device) = 0;
-    //  virtual std::string get_devices_status_string() = 0;
-    //  virtual std::string get_device_info_string(uint8_t device_id) = 0;
-    //  virtual void remove_device(I_Device *) = 0;
-    //  virtual I_DeviceIOCapability *get_device_IO_capabilities(I_Device *) = 0;
+    virtual void update_devices_list() = 0;
+
+    virtual int get_devices_num(device_statuses status_to_filter_by = ANY) = 0;
+    virtual void get_devices(I_Device **devices_return_array, device_statuses status_to_filter_by = ANY) = 0;
+
+    virtual static device_statuses get_status(I_Device* device) = 0;
 };
 
 #endif /*I_BUS_MANAGER_H*/

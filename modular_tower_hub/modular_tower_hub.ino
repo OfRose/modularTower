@@ -34,7 +34,7 @@ void setup() {
 //   }
 // }
 
-String prompt = "Select option:\n\t1) Print all devices info;\n";
+String prompt = "Select option:\n\t1) Print all devices info;\n\t2) Print all UNIINITIALISED devices info;\n";
 
 void loop() {
   char input;
@@ -45,8 +45,10 @@ void loop() {
   while (Serial.available()) {
     Serial.read();
   }
+
   int len;
   I_Device** device_buffer;
+
   switch (input) {
     case '1':
       master.bus_manager->scan_bus();
@@ -57,8 +59,16 @@ void loop() {
         Serial.println(device_buffer[i]->get_info_string().c_str());
       }
       break;
-    default:
-      Serial.println("Not implemented yet!");
+    case '2':
+      master.bus_manager->scan_bus();
+      len = master.bus_manager->get_UNINITIALISED_devices_num();
+      device_buffer = new I_Device*[len];
+      master.bus_manager->get_UNINITIALISED_devices(device_buffer);
+      for (int i = 0; i < len; i++) {
+        Serial.println(device_buffer[i]->get_info_string().c_str());
+      }
+      break;
+    default: Serial.println("Not implemented yet!");
   }
 
   // int new_devices_num = deviceManager.scan_I2C_bus();

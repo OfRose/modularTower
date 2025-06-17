@@ -31,8 +31,18 @@ void I2C_BusManager::scan_bus()
       if (this->devices.find(address) == this->devices.end())
       {
         this->devices[address] = new I2C_Device(address);
-      }else{
-        this->devices[address]->set_status(UNINITIALISED);
+      }
+      else
+      {
+        switch (this->devices[address]->get_status())
+        {
+        case DISCOVERED:
+          this->devices[address]->set_status(UNINITIALISED);
+          break;
+        case INITIALISED:
+          this->devices[address]->set_status(this->retrieve_status_from_hardware_device(address));
+          break;
+        }
       }
 
       break;
@@ -44,6 +54,11 @@ void I2C_BusManager::scan_bus()
       break;
     }
   }
+}
+
+device_statuses I2C_BusManager::retrieve_status_from_hardware_device(uint8_t address)
+{
+    return;
 }
 
 /* I_Device *I2C_BusManager::scan_bus_for_new_devices(int *devices_num)

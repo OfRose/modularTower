@@ -12,6 +12,7 @@ public:
     ModularDeviceController(I_BusManager *bus_manager, I_IOChainingManager *IO_chaining_manager);
     I_BusManager *bus_manager;
     I_IOChainingManager *IO_chaining_manager;
+    //void main_loop();
 };
 
 #endif /*MODULAR_DEVICE_CONTROLLER_H*/

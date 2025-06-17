@@ -47,28 +47,6 @@ Stati possibili device per popolare il vettore di stato definito all'interno del
 
 class I2C_BusManager : public A_GenericBusManager<uint8_t>
 {
-public:
-    I2C_BusManager(); // Constructor
-    void scan_bus();
-
-    // int scan_I2C_bus();      // restituisce numero device DISCOVERED_TO_INITIALISE trovati
-
-    // void init_new_devices(); // inizializza devices (instanziamento classe, lettura mappa comandi, aggiornamento stato ecc)
-    /*
-        Sample Usage:
-        if(deviceManager.scan_I2C_bus() > 0){
-            deviceManager.init_new_devices();
-        }
-    */
-    // Restituisce lo stato salvato nel vettore device_status_array
-    // int device_status_by_address(uint8_t address);
-
-    // restituisce puntamento all'istanza della classe device per l'indirizzo selezionato
-    // I2C_Device *getDevice(uint8_t address);
-
-    // std::string get_devices_status_string();
-    // std::string get_device_info_string(uint8_t device_id);
-
 private:
     class I2C_Device : public A_GenericBusManager<uint8_t>::A_GenericDevice
     {
@@ -77,8 +55,12 @@ private:
         {
             this->address = address;
         };
-        std::string get_info_string() {return std::to_string(address) + " - " + std::to_string(this->status);};
-        uint8_t getID(){
+        std::string get_info_string()
+        {
+            return std::to_string(address) + " - " + I2C_BusManager::from_device_status_to_string(this->status);
+        };
+        uint8_t getID()
+        {
             return address;
         };
         /*
@@ -97,7 +79,7 @@ private:
          */
     private:
         uint8_t address;
-        //std::string info = "standard";
+        // std::string info = "standard";
     };
 
     // I2C_Device *I2C_device_array[TOTAL_AVAILABLE_ADDRESSES] = {nullptr};
@@ -109,6 +91,27 @@ private:
 
     // hasmap for storing pointers to instances of class modularDevice
     // std::unordered_map<uint8_t, I2C_Device *> devices;
+public:
+    I2C_BusManager(); // Constructor
+    void scan_bus();
+    device_statuses retrieve_status_from_hardware_device(uint8_t address);
+    // int scan_I2C_bus();      // restituisce numero device DISCOVERED_TO_INITIALISE trovati
+
+    // void init_new_devices(); // inizializza devices (instanziamento classe, lettura mappa comandi, aggiornamento stato ecc)
+    /*
+        Sample Usage:
+        if(deviceManager.scan_I2C_bus() > 0){
+            deviceManager.init_new_devices();
+        }
+    */
+    // Restituisce lo stato salvato nel vettore device_status_array
+    // int device_status_by_address(uint8_t address);
+
+    // restituisce puntamento all'istanza della classe device per l'indirizzo selezionato
+    // I2C_Device *getDevice(uint8_t address);
+
+    // std::string get_devices_status_string();
+    // std::string get_device_info_string(uint8_t device_id);
 };
 
 #endif /*I2C_MODULAR_DEVICE_MANAGER_H*/
